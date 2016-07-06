@@ -54,9 +54,6 @@ if (doc && newDoc) {
 				//output.trace("[END]");
 
 			}
-			if (item.itemType == "folder"){
-				console.log('folder');
-			}
 
 		}
 	}
