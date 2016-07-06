@@ -37,14 +37,17 @@
 .word .img {
     transform: rotateY(180deg);
     background-image: url(images/left-back.png);
-    /* width: 110px; */
+    width: 120px;
     /* height: 80px; */
     background-size: contain;
 }
 
-span {
-    position: absolute;
-    bottom: 5px;
+.word .img::after {/* content: 'aaa'; *//* transform: rotateY(180deg); */}
+
+.word span {
+    position: relative;
+    bottom: 25px;
+    left: 30px;
 }
 
 .word .img:after {/* content: '<img src="">'; */}
@@ -81,14 +84,14 @@ span {
     /* background-position: -147px -53px; */
 }
 
-div {
+img>div {
 }
 
 .img img {
     width: 45px;
     height: 45px;
     position: absolute;
-    right: 15px;
+    /* right: 15px; */
     top: 10px;
 }
 
@@ -109,4 +112,15 @@ img {}
 .word.left {
     margin-left: 100px;
     /* transform: rotate(180deg); */
+}
+.word>div:nth-child(2n) {
+    position: absolute;
+    z-index: 2;
+    transform: translate(20px,-70px);
+    text-align: center;
+}
+
+.word>div:nth-child(2n) div {
+    position: relative;
+    bottom: 9px;
 }

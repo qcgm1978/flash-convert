@@ -5,7 +5,12 @@ $(function () {
             (i + 1) +
             '.png)';
     })
-    $('.left:odd .img').append(function (i, n) {
-        return $('<span>').text(words[i]);
+    $('.left .img:gt(4)').after(function (i, n) {
+        var $div=$('<div>')
+        var $img=$('<img>',{
+            src:'images/1110001.png'
+        });
+        $div.append($img).append($('<div>').text(words[i]))
+        return $div;
     })
 });
