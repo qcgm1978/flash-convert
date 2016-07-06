@@ -1,0 +1,99 @@
+#right-arrow {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+#left-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.img {
+    background-image: url("images/bg.png");
+    width: 120px;
+    height: 80px;
+    background-size: cover;
+    position: relative;
+    /* transform: rotate(180deg); */
+    /* position: absolute; */
+}
+
+.img {
+    font-size: 23px;
+    text-align: center;
+    /* vertical-align: bottom; */
+}
+
+.word .img {
+    transform: rotateY(180deg);
+}
+
+span {
+    position: absolute;
+    bottom: 5px;
+}
+
+.word .img:after {/* content: '<img src="">'; */}
+
+.chart .img div {
+    background-image: url('images/back-sprite.png');
+    /*background-position: 12px right,top left;*/
+    width: 83px;
+    height: 55px;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    /* background-position: 1px 11px; */
+    background-repeat: no-repeat;
+}
+
+.chart .img:nth-child(1) div {
+    background-position: 1px 11px;
+}
+
+.chart .img:nth-child(2) div {
+    background-position: -80px 11px;
+}
+.chart .img:nth-child(3) div {
+    background-position: -160px 11px;
+}
+.chart .img:nth-child(4) div {
+    background-position: -77px -44px;
+}
+.chart .img:nth-child(5) div {
+    background-position: -147px -53px;
+}
+
+div {
+}
+
+.img img {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+
+img {}
+
+#middle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.left {
+    float: left;
+    /* position: relative; */
+}
+
+.word.left {
+    margin-left: 100px;
+    /* transform: rotate(180deg); */
+}
