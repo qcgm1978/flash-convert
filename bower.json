@@ -1,0 +1,21 @@
+{
+  "name": "flash-convert",
+  "homepage": "https://github.com/qcgm1978/flash-convert",
+  "authors": [
+    "qcgm1978 <zhanghl@strongunion.com.cn>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.0.0"
+  }
+}
