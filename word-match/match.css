@@ -116,11 +116,15 @@ img {}
 .word>div:nth-child(2n) {
     position: absolute;
     z-index: 2;
-    transform: translate(20px,-70px);
+    transform: translate(27px,-70px);
     text-align: center;
+}
+
+.word>div:nth-child(2n) img {
+    width: 40px;
 }
 
 .word>div:nth-child(2n) div {
     position: relative;
-    bottom: 9px;
+    /* bottom: 9px; */
 }
