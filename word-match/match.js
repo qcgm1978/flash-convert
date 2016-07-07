@@ -1,10 +1,11 @@
 $(function () {
     var words = ["cave", "skate", "lake", "plane", "rainy"];
     var randomArr = shuffle([...Array(words.length).keys()])
-    $('.chart:even .img div').css('background-image', function (i, n) {
-        $(this).attr('word', words[i])
+    $('.chart .img div').css('background-image', function (i, n) {
+        var random = randomArr[i];
+        $(this).attr('word', words[random])
         return 'url(images/' +
-            (randomArr[i] + 1) +
+            (random + 1) +
             '.png)';
     })
     function shuffle(array) {
@@ -33,8 +34,8 @@ $(function () {
         $div.append($('<div>').text(word))
         return $div;
     })
-    $('.img').click({}, function (evt) {
-        if ($(this).parents('.word').length > 0) {
+    $('.word [word]').click({},
+        function (evt) {
             if ($(this).is('[word]')) {
                 $(this).addClass('sound')
                 var word = $(this).attr('word');
@@ -47,16 +48,47 @@ $(function () {
                 } else {
                     evt.data[word].play();
                 }
-            } else {
-                $(this)
-                    .addClass('move move-name')
-                    .removeClass('shadow')
-                    .next()
-                    .addClass('move trumpet');
+                var that = this;
+                setTimeout(function () {
+                    $(that).removeClass('sound')
+                }, 1000)
             }
+        }
+    )
+    $('.img').click({word: {ini:true}}, function (evt) {
+        if ($(this).parents('.word').length > 0) {
+            var word = $(this).next().attr('word');
+            evt.data.word.right = word;
+        } else {
+            var word = $(this).children('div').attr('word');
+            evt.data.word.left = word;
+        }
+        if (evt.data.word.left == evt.data.word.right&&!evt.data.word.ini) {
+            var that = this;
+            var moveObj = $('.word [word=' +
+                evt.data.word.left +
+                ']').prev();
+            var $parent = $('.chart .img div').filter('[word=' +
+                evt.data.word.left +
+                ']').parent();
+            var offset = $parent.index()-moveObj.index('.word .img');
+            moveObj
+                .next()
+                .addBack()
+                .animate({
+                    left: "-110",
+                    top: (86 + 10) * offset
+                }, 1000, function () {
+                    $(that).css({
+                        'background-image': 'url("images/bg.png")',
+                        'background-size': 'cover'
+                    })
+                    moveObj.add($parent).removeClass('shadow')
+                });
         } else {
             $('.img').removeClass('shadow');
             $(this).addClass('shadow')
         }
+        evt.data.word.ini=false;
     });
 });

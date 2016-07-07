@@ -40,7 +40,6 @@
     /* width: 120px; */
     /* height: 88px; */
     background-size: contain;
-    position: relative;
     background-position: 0;
 }
 
@@ -116,7 +115,7 @@ img {
 
 .left {
     float: left;
-    /* position: relative; */
+    position: relative;
 }
 
 .word.left {
@@ -162,7 +161,14 @@ img {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
-
+.move-transition{
+    transition-property:left background-size background-image;
+    transition-duration: 2s;
+    transition-timing-function: ease;
+    background-image: url("images/bg.png");
+    left: -110px;
+    background-size: cover;
+}
 .move-name {
     animation-name: move;
 }
@@ -200,5 +206,6 @@ img {
 }
 
 .shadow {
-    box-shadow: -2px 0px 5px 0px #FCE702;
+    /* box-shadow: -2px 1px 2px 1px orange; */
+    outline: ridge 3px yellow;
 }
