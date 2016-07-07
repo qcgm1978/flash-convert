@@ -147,3 +147,6 @@ img {}
     /* bottom: 9px; */
     margin-top: 97%;
 }
+.shadow{
+    box-shadow: -2px 0px 5px 0px #FCE702;
+}
