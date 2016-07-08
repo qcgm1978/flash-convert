@@ -1,12 +1,42 @@
 $(function () {
-    var words = ["cave", "skate", "lake", "plane", "rainy"];
-    var randomArr = shuffle([...Array(words.length).keys()])
-    $('.chart .img div').css('background-image', function (i, n) {
-        var random = randomArr[i];
-        $(this).attr('word', words[random])
-        return 'url(images/' +
-            (random + 1) +
-            '.png)';
+    var words = ["cave", "skate", "lake", "plane", "rainy", 'play', 'sail', 'tail', 'day', 'train', 'way', 'bay'];
+
+    function renderChartImgs(array) {
+        var randomArr = shuffle(array)
+        $('.chart .img div').each(function (i, n) {
+            var random = randomArr[i];
+            var imgUrl = 'images/' +
+                words[random] +
+                '.png';
+            var $img = $('<img/>').attr('src', imgUrl)
+            $img.on('load', function () {
+                $(this).remove(); // prevent memory leaks as @benweet suggested
+                $(n).attr('word', words[random])
+                $(n).css('background-image',
+                    'url(' +
+                    imgUrl +
+                    ')');
+            })
+        });
+    }
+
+    renderChartImgs([...Array(5).keys()]);
+    $('#right-arrow').click({page: 1}, function (evt) {
+        $('.word .img')
+            .css({'background-image': 'url(images/left-back.png)'})
+            .next().addBack().css({
+                left: 'auto', top: 'auto',
+                'background-size': 'contain'
+            })
+        if (evt.data.page < 2) {
+            var startIndex = 5 * evt.data.page;
+            renderChartImgs([...Array(5).keys()].map((e, i)=>i + startIndex));
+            renderWordsArea(words.slice(startIndex, startIndex + 5));
+            evt.data.page++;
+        } else {
+            renderChartImgs([...Array(2).keys()].map((e, i)=>i + 10));
+            renderWordsArea(words.slice(10, 10 + 2));
+        }
     })
     function shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -24,21 +54,29 @@ $(function () {
         return array;
     }
 
-    $('.left .img:gt(4)').after(function (i, n) {
-        var word = words[i];
-        var $div = $('<div>')
-            .css({
-                backgroundImage: 'url("images/1110001.png")'
+    function renderWordsArea(words) {
+        $('.left .img').slice(5, 5 + words.length)
+            .next('div.pronounce')
+            .remove()
+            .end()
+            .after(function (i, n) {
+                var word = words[i];
+                var $div = $('<div class="pronounce">')
+                    .css({
+                        backgroundImage: 'url("images/1110001.png")'
+                    })
+                    .attr('word', word)
+                $div.append($('<div>').text(word))
+                return $div;
             })
-            .attr('word', word)
-        $div.append($('<div>').text(word))
-        return $div;
-    })
-    $('.word [word]').click({},
+    }
+
+    renderWordsArea(words.slice(0, 5));
+    $('.word').click({},
         function (evt) {
-            if ($(this).is('[word]')) {
-                $(this).addClass('sound')
-                var word = $(this).attr('word');
+            if ($(evt.target).is('[word]')) {
+                $(evt.target).addClass('sound')
+                var word = $(evt.target).attr('word');
                 if ($.isEmptyObject(evt.data[word])) {
                     var audioElement = document.createElement('audio');
                     audioElement.setAttribute('src', 'sounds/' + word + '.mp3');
@@ -48,9 +86,8 @@ $(function () {
                 } else {
                     evt.data[word].play();
                 }
-                var that = this;
                 setTimeout(function () {
-                    $(that).removeClass('sound')
+                    $(evt.target).removeClass('sound')
                 }, 1000)
             }
         }
@@ -93,9 +130,8 @@ $(function () {
                     setTimeout(()=> {
                         $(moveObj)
                             .css('transform', 'rotateY(180deg) scale(1)');
-                        $chartObj.css('transform', 'scale(1)').css('z-index',0);
+                        $chartObj.css('transform', 'scale(1)').css('z-index', 0);
                     }, 2000);
-
                 });
         } else {
             $('.img').removeClass('shadow');
