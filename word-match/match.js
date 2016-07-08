@@ -55,7 +55,7 @@ $(function () {
             }
         }
     )
-    $('.img').click({word: {ini:true}}, function (evt) {
+    $('.img').click({word: {ini: true}}, function (evt) {
         if ($(this).parents('.word').length > 0) {
             var word = $(this).next().attr('word');
             evt.data.word.right = word;
@@ -63,15 +63,15 @@ $(function () {
             var word = $(this).children('div').attr('word');
             evt.data.word.left = word;
         }
-        if (evt.data.word.left == evt.data.word.right&&!evt.data.word.ini) {
+        if (evt.data.word.left == evt.data.word.right && !evt.data.word.ini) {
             var that = this;
             var moveObj = $('.word [word=' +
                 evt.data.word.left +
                 ']').prev();
-            var $parent = $('.chart .img div').filter('[word=' +
+            var $chartObj = $('.chart .img div').filter('[word=' +
                 evt.data.word.left +
                 ']').parent();
-            var offset = $parent.index()-moveObj.index('.word .img');
+            var offset = $chartObj.index() - moveObj.index('.word .img');
             moveObj
                 .next()
                 .addBack()
@@ -79,16 +79,28 @@ $(function () {
                     left: "-110",
                     top: (86 + 10) * offset
                 }, 1000, function () {
-                    $(that).css({
-                        'background-image': 'url("images/bg.png")',
-                        'background-size': 'cover'
-                    })
-                    moveObj.add($parent).removeClass('shadow')
+                    $(moveObj)
+                        .css({
+                            'background-image': 'url("images/bg.png")',
+                            'background-size': 'cover',
+                            'transform': 'rotateY(0)'
+                        })
+                        .add($chartObj).removeClass('shadow')
+                        .addClass('correct-transition');
+                    $(moveObj)
+                        .css('transform', 'rotateY(180deg) scale(1.1)');
+                    $chartObj.css('transform', 'scale(1.1)');
+                    setTimeout(()=> {
+                        $(moveObj)
+                            .css('transform', 'rotateY(180deg) scale(1)');
+                        $chartObj.css('transform', 'scale(1)').css('z-index',0);
+                    }, 2000);
+
                 });
         } else {
             $('.img').removeClass('shadow');
             $(this).addClass('shadow')
         }
-        evt.data.word.ini=false;
+        evt.data.word.ini = false;
     });
 });
