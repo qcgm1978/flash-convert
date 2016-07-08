@@ -21,23 +21,42 @@ $(function () {
     }
 
     renderChartImgs([...Array(5).keys()]);
-    $('#right-arrow').click({page: 1}, function (evt) {
+    $('#left-arrow,#right-arrow').click({page: 1}, function (evt) {
+        var page = evt.data.page;
+        if ($(this).is('#right-arrow')) {
+            page = page == 3 ? page : ++page;
+        } else {
+            page = page == 1 ? page : --page;
+        }
+        evt.data.page = page;
+        if (page < 3) {
+            var endIndex = 5 * page == 5 ? 5 : 5 * page;
+            renderChartImgs([...Array(5).keys()].map((e, i)=>i + endIndex - 5));
+            renderWordsArea(words.slice(endIndex - 5, endIndex));
+        } else {
+            renderChartImgs([...Array(2).keys()].map((e, i)=>i + 10));
+            renderWordsArea(words.slice(10, 10 + 2));
+        }
+        setPage.call(this, evt, page)
+    })
+    function setPage(evt, page) {
         $('.word .img')
             .css({'background-image': 'url(images/left-back.png)'})
             .next().addBack().css({
                 left: 'auto', top: 'auto',
                 'background-size': 'contain'
             })
-        if (evt.data.page < 2) {
-            var startIndex = 5 * evt.data.page;
-            renderChartImgs([...Array(5).keys()].map((e, i)=>i + startIndex));
-            renderWordsArea(words.slice(startIndex, startIndex + 5));
-            evt.data.page++;
+        if (page == 3) {
+            $('#left-arrow').attr('src', 'images/arrow.png')
+            $('#right-arrow').attr('src', 'images/arrow-grey.png')
+        } else if (page == 2) {
+            $('#left-arrow,#right-arrow').attr('src', 'images/arrow.png')
         } else {
-            renderChartImgs([...Array(2).keys()].map((e, i)=>i + 10));
-            renderWordsArea(words.slice(10, 10 + 2));
+            $('#right-arrow').attr('src', 'images/arrow.png')
+            $('#left-arrow').attr('src', 'images/arrow-grey.png')
         }
-    })
+    }
+
     function shuffle(array) {
         var currentIndex = array.length, temporaryValue, randomIndex;
         // While there remain elements to shuffle...
