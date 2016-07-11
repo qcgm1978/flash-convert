@@ -4,11 +4,12 @@ h1{
     padding-left: 40px;
 }
 article{
-    background: url(trumpet.png) no-repeat 94% 90%,url(bg.png) no-repeat;
+    background: url(bg.png) no-repeat;
     width: 21%;
     height: 162px;
     display: inline-block;
-    background-size: 31px 31px,contain;
+    background-size: contain;
+    position: relative;
 }
 footer{
     background: url(go.png) no-repeat;
@@ -19,7 +20,7 @@ footer{
     position: absolute;
     left: 84%;
 }
-article img{
+article .img{
     width: 150px;
     transform: translateY(17px);
 }
@@ -30,4 +31,40 @@ strong{
 }
 i{
     color:red;
+}
+.trumpet{
+    position: absolute;
+    background: url(trumpet.png) no-repeat;
+    width: 31px;
+    height: 31px;
+    right: 6%;
+    bottom: 8%;
+    background-size: contain;
+}
+.sound {
+    animation-duration: 1s;
+    animation-iteration-count: 2;
+    animation-name: sound;
+    animation-timing-function: linear;
+}
+
+@keyframes sound {
+    50% {
+        background-image: url("00002.png");
+    }
+    100% {
+        background-image: url("00003.png");
+    }
+}
+
+.frog {
+    position: absolute;
+    transform: translateY(-70%);
+}
+section{
+    position: relative;
+}
+.section-frog{
+    position: absolute;
+    width: 40px;
 }
