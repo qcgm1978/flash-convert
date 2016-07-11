@@ -1,0 +1,12 @@
+{
+  "generator-rrh-stack": {
+    "appName": "app",
+    "style": "scss"
+  },
+  "generator-react-webpack": {
+    "appName": "flashConvert",
+    "style": "sass",
+    "postcss": true,
+    "generatedWithVersion": 3
+  }
+}
