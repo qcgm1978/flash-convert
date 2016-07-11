@@ -19,22 +19,27 @@ $(function () {
             .append($trumpet)
         $('section').append($article)
     }
+    function playSound(evt, text) {
+        var word = text;
+        if ($.isEmptyObject(evt.data[word])) {
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', 'sounds/' + word + '.mp3');
+            audioElement.setAttribute('autoplay', 'autoplay');
+            evt.data[word] = audioElement
+            audioElement.play();
+        } else {
+            evt.data[word].play();
+        }
+
+    }
+
     $('.trumpet').click({},
         function (evt) {
             $(this).addClass('sound')
-            var word = $(this).prev().text();
-            if ($.isEmptyObject(evt.data[word])) {
-                var audioElement = document.createElement('audio');
-                audioElement.setAttribute('src', 'sounds/' + word + '.mp3');
-                audioElement.setAttribute('autoplay', 'autoplay');
-                evt.data[word] = audioElement
-                audioElement.play();
-            } else {
-                evt.data[word].play();
-            }
             setTimeout(function () {
                 $(evt.target).removeClass('sound')
             }, 1000)
+            playSound.call(this, evt, $(this).prev().text());
         }
     )
     var $frog = $('<img>', {
@@ -42,7 +47,8 @@ $(function () {
     }).addClass('section-frog')
     var arr = shuffle([...Array(12).keys()])
     var index = 0
-    $('footer').click(function (e) {
+    $('footer').click({}, function (evt) {
+        playSound.call(this, evt, 'GuaGua');
         if ($('.section-frog').length == 0) {
             $('.frog').hide();
             $frog.appendTo('section')
@@ -52,14 +58,14 @@ $(function () {
             left: $('article').width() * column + 6,
             top: 162 * row
         })
-        if (index<12) {
+        if (index < 12) {
             index++;
         } else {
-            index=0;
+            index = 0;
         }
     })
-    $('h1 img').click(function () {
-        var arr=shuffle($('article'));
+    $('h1 img').click(function (evt) {
+        var arr = shuffle($('article'));
         $('section').prepend(arr)
     })
     function shuffle(array) {
