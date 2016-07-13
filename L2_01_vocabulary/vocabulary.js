@@ -53,7 +53,8 @@ $(function () {
             $('.frog').hide();
             $frog.appendTo('section')
         }
-        var column = parseInt(arr[index] % 4), row = parseInt(arr[index] / 4);
+        var numberCol = Math.floor(document.body.clientWidth/document.querySelector('article').offsetWidth);
+        var column = parseInt(arr[index] % numberCol), row = parseInt(arr[index] / numberCol);
         $('.section-frog').css({
             left: $('article').width() * column + 6,
             top: 162 * row
