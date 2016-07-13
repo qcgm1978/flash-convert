@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "jquery": "^3.0.0",
-    "createjs-combined": "^2015.11.26"
+    "createjs-combined": "^2015.11.26",
+    "cocos2d-html5": "*"
   }
 }
