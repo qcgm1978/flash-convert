@@ -159,3 +159,7 @@ $(function () {
         evt.data.word.ini = false;
     });
 });
+class Test{
+
+}
+export default Test;

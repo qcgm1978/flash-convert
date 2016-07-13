@@ -147,7 +147,7 @@ lib.properties = {
 	this.shape.setTransform(16.5,11.2);
 
 	this.shape_1 = new cjs.Shape();
-	this.shape_1.graphics.f().s("#663300").ss(1,1,1).p("AgYgvQAKAEAIAHQAAABABAAQAMAQAAATQAAAUgMAPQgBABAAAAQgIAIgKADAgYhAQAJACAJAFQAGAFAGAGQATAUAAAaQAAAbgTAUQgGAGgGAFQgJAFgJAC");
+	this.shape_1.graphics.f().s("#663300").ss(1,1,1).p("AgYhAQAJACAJAFQAGAFAGAGQATAUAAAaQAAAbgTAUQgGAGgGAFQgJAFgJACAgYgvQAKAEAIAHQAAABABAAQAMAQAAATQAAAUgMAPQgBABAAAAQgIAIgKAD");
 	this.shape_1.setTransform(17.4,11.2);
 
 	this.timeline.addTween(cjs.Tween.get({}).to({state:[]}).to({state:[{t:this.shape}]},3).to({state:[{t:this.shape_1}]},4).wait(4));
