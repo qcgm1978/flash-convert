@@ -5,7 +5,7 @@ h1{
 }
 article{
     background: url(bg.png) no-repeat;
-    width: 21%;
+    width: 160px;
     height: 162px;
     display: inline-block;
     background-size: contain;
@@ -19,6 +19,18 @@ footer{
     transform: translateY(-100%);
     position: absolute;
     left: 84%;
+}
+@media all and (max-width: 770px)  {
+    footer{
+        left: 0;
+        transform: translate(30px,30px);
+    }
+}
+@media all and (min-width: 970px) {
+    footer{
+        left: 0;
+        transform: translate(900px,30px);
+    }
 }
 article .img{
     width: 150px;
@@ -38,7 +50,7 @@ i{
     width: 31px;
     height: 31px;
     right: 6%;
-    bottom: 8%;
+    bottom: 11%;
     background-size: contain;
 }
 .sound {
@@ -63,7 +75,9 @@ i{
 }
 section{
     position: relative;
+    /*min-width:770px;*/
 }
+
 .section-frog{
     position: absolute;
     width: 40px;
