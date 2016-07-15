@@ -22,6 +22,9 @@ $(function () {
 
     renderChartImgs([...Array(5).keys()]);
     $('#left-arrow,#right-arrow').click({page: 1}, function (evt) {
+        if(/grey/.test($(this).attr('src'))){
+            return;
+        }
         var page = evt.data.page;
         if ($(this).is('#right-arrow')) {
             page = page == 3 ? page : ++page;
@@ -34,17 +37,16 @@ $(function () {
             renderChartImgs([...Array(5).keys()].map((e, i)=>i + endIndex - 5));
             renderWordsArea(words.slice(endIndex - 5, endIndex));
         } else {
-            renderChartImgs([...Array(2).keys()].map((e, i)=>i + 10));
-            renderWordsArea(words.slice(10, 10 + 2));
+            renderChartImgs([...Array(5).keys()].map((e, i)=>i + 7));
+            renderWordsArea(words.slice(7, 12));
         }
         setPage.call(this, evt, page)
     })
     function setPage(evt, page) {
-        $('.word .img')
-            .css({'background-image': 'url(images/left-back.png)'})
-            .next().addBack().css({
-                left: 'auto', top: 'auto',
-                'background-size': 'contain'
+        $('.word .img').css({left: 'auto', top: 'auto'})
+        $('.chart .img').css({'background-image': 'url(images/heart.png), url(images/left-back.png)'})
+            .css({
+                'background-size': '10px 10px, contain'
             })
         if (page == 3) {
             $('#left-arrow').attr('src', 'images/arrow.png')
@@ -91,27 +93,26 @@ $(function () {
     }
 
     renderWordsArea(words.slice(0, 5));
-    $('.pronounce').click({},
-        function (evt) {
-            if ($(evt.target).is('[word]')) {
-                $(evt.target).addClass('sound')
-                var word = $(evt.target).attr('word');
-                if ($.isEmptyObject(evt.data[word])) {
-                    var audioElement = document.createElement('audio');
-                    audioElement.setAttribute('src', 'sounds/' + word + '.mp3');
-                    audioElement.setAttribute('autoplay', 'autoplay');
-                    evt.data[word] = audioElement
-                    audioElement.play();
-                } else {
-                    evt.data[word].play();
-                }
-                setTimeout(function () {
-                    $(evt.target).removeClass('sound')
-                }, 1000)
-            }
+    function playSound(evt) {
+        $(evt.target).addClass('sound')
+        var word = $(evt.target).attr('word');
+        if ($.isEmptyObject(evt.data[word])) {
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', 'sounds/' + word + '.mp3');
+            audioElement.setAttribute('autoplay', 'autoplay');
+            evt.data[word] = audioElement
+            audioElement.play();
+        } else {
+            evt.data[word].play();
         }
-    )
+        setTimeout(function () {
+            $(evt.target).removeClass('sound')
+        }, 1000)
+    }
     $('.img').click({word: {ini: true}}, function (evt) {
+        if($(evt.target).is('.pronounce')){
+            playSound.call(this,evt);
+        }
         if ($(this).parents('.word').length > 0) {
             var word = $(this).find('[word]').attr('word');
             evt.data.word.right = word;
@@ -131,7 +132,7 @@ $(function () {
             moveObj
                 .animate({
                     left: "-110",
-                    top: 86  * offset
+                    top: 86 * offset
                 }, 1000, function () {
                     $(moveObj)
                         .css({
@@ -145,7 +146,8 @@ $(function () {
                     setTimeout(()=> {
                         $(moveObj)
                             .css('transform', 'scale(1)');
-                        $chartObj.css('transform', 'scale(1)').css('z-index', 2).css({'background-image': 'url("images/bg.png")',
+                        $chartObj.css('transform', 'scale(1)').css('z-index', 2).css({
+                            'background-image': 'url("images/bg.png")',
                             'background-size': 'cover'
                         });
                     }, 2000);

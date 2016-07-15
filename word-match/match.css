@@ -15,7 +15,7 @@
     /* background-image: url("images/heart.png"),url("images/left-back.png"); */
     width: 110px;
     height: 86px;
-    background-size: 10px 10px, contain;
+    /* background-size: 10px 10px, contain; */
     position: relative;
     /* transform: rotate(180deg); */
     /* position: absolute; */
@@ -26,6 +26,7 @@
 .chart .img {
     background-image: url(images/heart.png), url(images/left-back.png);
     z-index: 0;
+    background-size: 10px 10px, contain;
 }
 
 .img {
