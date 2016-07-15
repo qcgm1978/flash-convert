@@ -75,23 +75,23 @@ $(function () {
 
     function renderWordsArea(words) {
         $('.left .img').slice(5, 5 + words.length)
-            .next('div.pronounce')
-            .remove()
-            .end()
-            .after(function (i, n) {
+            //.next('div.pronounce')
+            //.remove()
+            //.end()
+            .html(function (i, n) {
                 var word = words[i];
                 var $div = $('<div class="pronounce">')
                     .css({
                         backgroundImage: 'url("images/1110001.png")'
                     })
                     .attr('word', word)
-                $div.append($('<div>').text(word))
+                $div.append($('<div>').addClass('txt').text(word))
                 return $div;
             })
     }
 
     renderWordsArea(words.slice(0, 5));
-    $('.word').click({},
+    $('.pronounce').click({},
         function (evt) {
             if ($(evt.target).is('[word]')) {
                 $(evt.target).addClass('sound')
@@ -113,7 +113,7 @@ $(function () {
     )
     $('.img').click({word: {ini: true}}, function (evt) {
         if ($(this).parents('.word').length > 0) {
-            var word = $(this).next().attr('word');
+            var word = $(this).find('[word]').attr('word');
             evt.data.word.right = word;
         } else {
             var word = $(this).children('div').attr('word');
@@ -123,33 +123,31 @@ $(function () {
             var that = this;
             var moveObj = $('.word [word=' +
                 evt.data.word.left +
-                ']').prev();
+                ']').parent();
             var $chartObj = $('.chart .img div').filter('[word=' +
                 evt.data.word.left +
                 ']').parent();
             var offset = $chartObj.index() - moveObj.index('.word .img');
             moveObj
-                .next()
-                .addBack()
                 .animate({
                     left: "-110",
-                    top: (86 + 10) * offset
+                    top: 86  * offset
                 }, 1000, function () {
                     $(moveObj)
                         .css({
-                            'background-image': 'url("images/bg.png")',
-                            'background-size': 'cover',
-                            'transform': 'rotateY(0)'
+                            //'transform': 'rotateY(0)'
                         })
                         .add($chartObj).removeClass('shadow')
                         .addClass('correct-transition');
                     $(moveObj)
-                        .css('transform', 'rotateY(180deg) scale(1.1)');
+                        .css('transform', 'scale(1.1)');
                     $chartObj.css('transform', 'scale(1.1)');
                     setTimeout(()=> {
                         $(moveObj)
-                            .css('transform', 'rotateY(180deg) scale(1)');
-                        $chartObj.css('transform', 'scale(1)').css('z-index', 0);
+                            .css('transform', 'scale(1)');
+                        $chartObj.css('transform', 'scale(1)').css('z-index', 2).css({'background-image': 'url("images/bg.png")',
+                            'background-size': 'cover'
+                        });
                     }, 2000);
                 });
         } else {
@@ -159,7 +157,6 @@ $(function () {
         evt.data.word.ini = false;
     });
 });
-class Test{
-
+class Test {
 }
 export default Test;

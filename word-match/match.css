@@ -32,16 +32,18 @@
     font-size: 23px;
     text-align: center;
     /* vertical-align: bottom; */
-    margin-top: 10px;
+    /* margin-top: 10px; */
+    /* padding-top: 20px; */
 }
 
 .word .img {
-    transform: rotateY(180deg);
-    background-image: url(images/left-back.png);
+    /*transform: rotateY(180deg);*/
+    background-image: url(images/right-back.png);
     /* width: 120px; */
     /* height: 88px; */
     background-size: contain;
     background-position: 0;
+    /* padding-top: 20px; */
 }
 
 .word .img::after {
@@ -124,15 +126,19 @@ img {
     /* transform: rotate(180deg); */
 }
 
-.word > div:nth-child(2n) {
+.word .pronounce {
     position: relative;
-    z-index: 2;
-    transform: translate(-43px, -76px);
+    /* z-index: 2; */
+    /* transform: translate(-43px, -76px); */
     text-align: center;
     width: 53px;
-    height: 53px;
+    /* height: 63px; */
     /* vertical-align: bottom; */
-    float: right;
+    /* float: right; */
+    margin-left: 20px;
+    padding-top: 46px;
+    background-repeat: no-repeat;
+    top: 8px;
 }
 
 .word > div:nth-child(2n) img {
@@ -205,7 +211,7 @@ img {
 .word > div:nth-child(2n) div {
     /* position: relative; */
     /* bottom: 9px; */
-    margin-top: 97%;
+    /* margin-top: 97%; */
 }
 
 .shadow {
@@ -214,6 +220,6 @@ img {
 }
 
 .correct-transition {
-    transition: transform 2s;
+    transition: transform  2s;
 
 }
