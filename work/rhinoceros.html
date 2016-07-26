@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!-- Learn about this code on MDN: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage -->
+
+<canvas id="canvas" width="400" height="200" class="playable-canvas"></canvas>
+<div style="display:none;">
+    <img id="source" src="images-startup/bg.png" >
+</div>
+<div class="playable-buttons">
+      <input id="edit" type="button" value="Edit" />
+      <input id="reset" type="button" value="Reset" />
+</div>
+<textarea id="code" class="playable-code">
+ctx.drawImage(image, 33, 71, 104, 124, 21, 20, 87, 104);</textarea>
+<script>
+    var canvas = document.getElementById("canvas");
+    var ctx = canvas.getContext("2d");
+    var image = document.getElementById('source');
+    image=new Image();
+    image.src='images-startup/bg.png'
+    var textarea = document.getElementById("code");
+    var reset = document.getElementById("reset");
+    var edit = document.getElementById("edit");
+    var code = textarea.value;
+
+    function drawCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        eval(textarea.value);
+    }
+
+    reset.addEventListener("click", function() {
+        textarea.value = code;
+        drawCanvas();
+    });
+
+    edit.addEventListener("click", function() {
+        textarea.focus();
+    })
+
+    textarea.addEventListener("input", drawCanvas);
+    window.addEventListener("load", drawCanvas);
+
+</script>
+</body>
+</html>
