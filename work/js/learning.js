@@ -1,5 +1,5 @@
 //var utilities=new Utilities()
-import RenderObj from './render-class'
+import RenderObj from './animation'
 import Graphics from './graphics'
 
 var canvas = document.getElementById("canvas");
