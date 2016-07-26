@@ -1,2 +1,2 @@
 //require("./js/learning.js");
-import './js/learning'
+import './js/app'
