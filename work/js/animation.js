@@ -1,51 +1,68 @@
+import {CanvasWidth,CanvasHeight} from './constant'
 import Utilities from './utilities'
-var RenderObj = class {
-    constructor(graphic) {
+let instance = null;
+class Animations {
+    constructor(graphicArr, ctx) {
+        if (!instance) {
+            instance = this;
+        }
+        // to test whether we have singleton or not
+        this.time = new Date()
         this.ini = true;
-        this.obj = null;
         this.isEndAnimate = false;
         this.rate = 10
-        this.graphic = graphic
-        this.width = graphic.width
-        this.height = graphic.height
-        //this.character = this.generateImg(src, startPos, endPos)
+        this.ctx = ctx
+        this.list = graphicArr
+        return instance;
     }
 
-    clearReact(ele) {
-        var pos = [], src = ''
-        if (typeof ele === 'object') {
-            pos = Utilities.getPosArr(ele)
-            src = ele.getAttribute('src')
-        } else {
-            pos = Utilities.getPosArr(this.obj)
-            src = this.obj.getAttribute('src')
-        }
-        this.obj = this.graphic.generateImg(src, pos)
-        let posEnd = this.getAnimateEndPos()
-        if (this.graphic.endpos[0] < posEnd[0] || this.graphic.endpos[1] < posEnd[1]) {
-            this.isEndAnimate = true;
-            return;
-        } else {
-        }
-        this.graphic.ctx.clearRect(pos[0], pos[1], this.width, this.height);
+    animateCanvas() {
+        this.animationFrame = requestAnimationFrame(()=> {
+            this.clearReact();
+            this.ctx.save()
+            this.redrawImg()
+            this.restore()
+            if (this.isEndAnimate) {
+                cancelAnimationFrame(this.animationFrame)
+            } else {
+                this.animateCanvas()
+            }
+        })
     }
 
-    getAnimateEndPos() {
-        let pos = Utilities.getPosArr(this.obj);
-        pos[0] += this.rate
+    clearReact() {
+        if (this.isEndAnimate) {
+        }
+        this.ctx.clearRect(0, 0, CanvasWidth, CanvasHeight);
+    }
+
+    setAnimateEndPos(item) {
+        let pos = item
+        pos.x += this.rate
         return pos
     }
 
     redrawImg() {
-        if (!this.isEndAnimate) {
-            var pos = this.getAnimateEndPos()
-            this.graphic.ctx.drawImage(this.obj, pos[0], pos[1], this.width, this.height);
-            this.obj = this.graphic.generateImg(this.obj.getAttribute('src'), pos)
+        for (let i = 0; i < this.list.length; i++) {
+            if (!this.isEndAnimate) {
+                var item = this.list[i];
+                this.setAnimateEndPos(item)
+                var x = item.x;
+                var y = item.y;
+                this.ctx.drawImage(item.character, x, y, item.width, item.height);
+                var isMiddlePath = (item.x != Math.max(item.startX, item.x, item.endX) &&
+                    item.x != Math.min(item.startX, item.x, item.endX)) ||
+                    (item.y != Math.max(item.startY, item.y, item.endY) &&
+                    item.y != Math.min(item.startY, item.y, item.endY))
+                if (!isMiddlePath) {
+                    this.isEndAnimate = true;
+                }
+            }
         }
     }
 
     restore() {
-        this.graphic.ctx.restore()
+        this.ctx.restore()
     }
 }
-export default RenderObj
+export default Animations

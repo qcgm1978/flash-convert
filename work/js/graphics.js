@@ -1,20 +1,24 @@
 import Utilities from './utilities'
 class Graphics {
-    constructor(startArr, endArr, widHeiArr, src, ctx) {
-        let startPos = startArr, endPos = endArr;
-        this.widthHeight = widHeiArr;
+    constructor(startPos, endPos, widHei, src, ctx) {
+        this.widthHeight = widHei;
+        this.startpos=startPos
         this.endpos = endPos
+        this.x=this.startX=startPos.x
+        this.y=this.startY=startPos.y
+        this.endX=endPos.x
+        this.endY=endPos.y
+
         this.ctx = ctx
-        //this.renderObj = new RenderObj(src, posHorse, endPos, ctx)
         this.character = this.generateImg(src, startPos, endPos)
     }
 
-    generateImg(src, pos, endPos) {
+    generateImg(src, startPos, endPos) {
         var image = new Image();
         image.src = src
-        image.dataset.pos = pos
+        image.dataset.startpos = startPos
         image.dataset.endpos = endPos
-        //image.dataset.widthHeight=this.widthHeight
+        image.dataset.wh=this.widthHeight
         return image;
     }
 
@@ -27,10 +31,10 @@ class Graphics {
         return this.character;
     }
     get width(){
-        return this.widthHeight[0]
+        return this.widthHeight.width
     }
     get height(){
-        return this.widthHeight[1]
+        return this.widthHeight.height
     }
 }
 export default Graphics;
