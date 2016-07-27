@@ -56,16 +56,16 @@ class Animations {
     }
 
     redrawImg() {
-        var length = this.list.length;
-        var arr = [...Array(length)].map(()=>false)
+        let length = this.list.length;
+        let arr = [...Array(length)].map(()=>false)
         for (let i = 0; i < length; i++) {
             if (!this.isEndAnimate) {
-                var item = this.list[i];
+                let item = this.list[i];
                 this.setAnimateEndPos(item)
-                var x = item.x;
-                var y = item.y;
+                let x = item.x;
+                let y = item.y;
                 this.ctx.drawImage(item.character, x, y, item.width, item.height);
-                var isEnd = item.x == item.endX && item.y == item.endY
+                let isEnd = item.x == item.endX && item.y == item.endY
                 if (isEnd) {
                     arr[i] = true
                 }
