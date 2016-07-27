@@ -37,19 +37,21 @@ class Animations {
     }
 
     setAnimateEndPos(item) {
-        var newVar = 0
+        let x = 0, y = 0;
         if (item.endX > item.startX) {
-            newVar = item.x + this.rate;
-            item.x = (newVar > item.endX) ? item.endX : newVar
+            x = item.x + this.rate;
+            item.x = (x > item.endX) ? item.endX : x
         } else if (item.endX < item.startX) {
-            newVar = item.x - this.rate;
-            item.x = newVar < item.endX ? item.endX : newVar
+            x = item.x - this.rate;
+            item.x = x < item.endX ? item.endX : x
         }
-        //if (item.endY>item.startY) {
-        //    item.y-=this.rate
-        //}else if (item.endY<item.startY) {
-        //    item.y += this.rate
-        //}
+        if (item.endY > item.startY) {
+            y = item.y + this.rate;
+            item.y = y > item.endY ? item.endY : y
+        } else if (item.endY < item.startY) {
+            y = item.y - this.rate;
+            item.y = y < item.endY ? item.endY : y
+        }
         return item
     }
 
