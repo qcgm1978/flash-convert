@@ -18,7 +18,7 @@ window.addEventListener("load", function () {
 
 });
 
-var animate=new Animations([renderHorse/*,renderTree.character*/],ctx)
+var animate=new Animations([renderHorse,renderTree],ctx)
 //console.log(animate.time);
 //setTimeout(()=> {
 //var animate1=new Animations(renderHorse)

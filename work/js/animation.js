@@ -37,28 +37,49 @@ class Animations {
     }
 
     setAnimateEndPos(item) {
-        let pos = item
-        pos.x += this.rate
-        return pos
+        var newVar = 0
+        if (item.endX > item.startX) {
+            newVar = item.x + this.rate;
+            item.x = (newVar > item.endX) ? item.endX : newVar
+        } else if (item.endX < item.startX) {
+            newVar = item.x - this.rate;
+            item.x = newVar < item.endX ? item.endX : newVar
+        }
+        //if (item.endY>item.startY) {
+        //    item.y-=this.rate
+        //}else if (item.endY<item.startY) {
+        //    item.y += this.rate
+        //}
+        return item
     }
 
     redrawImg() {
-        for (let i = 0; i < this.list.length; i++) {
+        var length = this.list.length;
+        var arr = [...Array(length)].map(()=>false)
+        for (let i = 0; i < length; i++) {
             if (!this.isEndAnimate) {
                 var item = this.list[i];
                 this.setAnimateEndPos(item)
                 var x = item.x;
                 var y = item.y;
                 this.ctx.drawImage(item.character, x, y, item.width, item.height);
-                var isMiddlePath = (item.x != Math.max(item.startX, item.x, item.endX) &&
-                    item.x != Math.min(item.startX, item.x, item.endX)) ||
-                    (item.y != Math.max(item.startY, item.y, item.endY) &&
-                    item.y != Math.min(item.startY, item.y, item.endY))
-                if (!isMiddlePath) {
-                    this.isEndAnimate = true;
+                var isEnd = item.x == item.endX && item.y == item.endY
+                if (isEnd) {
+                    arr[i] = true
                 }
             }
         }
+        if (arr.every(Boolean)) {
+            this.isEndAnimate = true;
+        }
+    }
+
+    isTweenY(item) {
+        return item.y != item.endY
+    }
+
+    isTweenX(item) {
+        return item.x != item.endX
     }
 
     restore() {
