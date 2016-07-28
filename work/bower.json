@@ -1,0 +1,22 @@
+{
+  "name": "work",
+  "description": "",
+  "main": "n",
+  "authors": [
+    "qcgm1978 <zhanghl@strongunion.com.cn>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/qcgm1978/flash-convert",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "^1.8.3",
+    "EaselJS": "https://github.com/CreateJS/EaselJS/archive/0.8.2.zip"
+  }
+}
