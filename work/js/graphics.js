@@ -1,24 +1,34 @@
 import Utilities from './utilities'
 class Graphics {
-    constructor(startPos, endPos, widHei, src, ctx) {
-        this.widthHeight = widHei;
-        this.startpos=startPos
-        this.endpos = endPos
-        this.x=this.startX=startPos.x
-        this.y=this.startY=startPos.y
-        this.endX=endPos.x
-        this.endY=endPos.y
-
+    constructor(config, ctx) {
+        this.config = config
+        this.widthHeight = config.metrics;
+        this.startpos = config.path.start
+        this.endpos = config.path.end
+        this.rate = config.rate || 10
+        if (config.loop) {
+            //this.loop = config.loop
+            let lastEle = config.path[config.path.length - 1]
+            this.loopPath = config.path.slice(config.loop[0], config.loop[1] + 1)
+            this.loopPath.unshift(lastEle)
+            this.loopNum=0
+        }
+        try {
+            this.x = this.startX = this.startpos.x
+            this.y = this.startY = this.startpos.y
+            this.endX = this.endpos.x
+            this.endY = this.endpos.y
+        } catch (e) {
+            console.log(e.message)
+            this.path = config.path
+        }
         this.ctx = ctx
-        this.character = this.generateImg(src, startPos, endPos)
+        this.character = this.generateImg(config.src, this.startpos, this.endpos)
     }
 
     generateImg(src, startPos, endPos) {
-        var image = new Image();
+        let image = new Image();
         image.src = src
-        image.dataset.startpos = startPos
-        image.dataset.endpos = endPos
-        image.dataset.wh=this.widthHeight
         return image;
     }
 
@@ -27,13 +37,11 @@ class Graphics {
         this.ctx.drawImage(this.character, pos[0], pos[1], this.widthHeight[0], this.widthHeight[1]);
     }
 
-    get ins() {
-        return this.character;
-    }
-    get width(){
+    get width() {
         return this.widthHeight.width
     }
-    get height(){
+
+    get height() {
         return this.widthHeight.height
     }
 }

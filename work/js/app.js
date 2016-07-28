@@ -4,8 +4,8 @@ import Animations from './animation'
 import Graphics from './graphics'
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
-function generateGraphic(arr) {
-    return new Graphics(arr[0], arr[1], arr[2], arr[3], ctx);
+function generateGraphic(param) {
+    return new Graphics(param,ctx)
 }
 
 let arrSource = []

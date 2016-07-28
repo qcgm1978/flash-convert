@@ -1,5 +1,7 @@
+//import _ from '../bower_components/underscore/underscore'
+
 import {CanvasWidth,CanvasHeight} from './constant'
-import Utilities from './utilities'
+//import Utilities from './utilities'
 let instance = null;
 class Animations {
     constructor(graphicArr, ctx) {
@@ -10,7 +12,6 @@ class Animations {
         this.time = new Date()
         this.ini = true;
         this.isEndAnimate = false;
-        this.rate = 10
         this.ctx = ctx
         this.list = graphicArr
         return instance;
@@ -38,21 +39,72 @@ class Animations {
 
     setAnimateEndPos(item) {
         let x = 0, y = 0;
-        if (item.endX > item.startX) {
-            x = item.x + this.rate;
-            item.x = (x > item.endX) ? item.endX : x
-        } else if (item.endX < item.startX) {
-            x = item.x - this.rate;
-            item.x = x < item.endX ? item.endX : x
-        }
-        if (item.endY > item.startY) {
-            y = item.y + this.rate;
-            item.y = y > item.endY ? item.endY : y
-        } else if (item.endY < item.startY) {
-            y = item.y - this.rate;
-            item.y = y < item.endY ? item.endY : y
+        if (isNaN(item.endX) || item.loop) {
+            //if(item)
+            item.loop = true
+            if (isNaN(item.endX)) {
+                this.iniPos(item, 0);
+            }
+            if (item.x == item.endX && item.y == item.endY) {
+                item.path.shift()
+                if (item.path.length < 2) {
+                    if (item.loopNum == item.loopPath.length - 1) {
+                        item.loopPath.reverse()
+                        item.loopNum = 0
+                    }
+                    let obj=this.iniPos({
+                        path: item.loopPath
+                    }, item.loopNum)
+
+                    item.loopNum++
+                    delete obj.path
+                    _.extend(item,obj)
+                } else {
+                    this.iniPos(item, 0)
+                }
+            }
+            if (item.endX > item.startX) {
+                x = item.x + item.rate;
+                item.x = (x > item.endX) ? item.endX : x
+            } else if (item.endX < item.startX) {
+                x = item.x - item.rate;
+                item.x = x < item.endX ? item.endX : x
+            }
+            if (item.endY > item.startY) {
+                y = item.y + item.rate;
+                item.y = y > item.endY ? item.endY : y
+            } else if (item.endY < item.startY) {
+                y = item.y - item.rate;
+                item.y = y < item.endY ? item.endY : y
+            }
+        } else {
+            if (item.endX > item.startX) {
+                x = item.x + item.rate;
+                item.x = (x > item.endX) ? item.endX : x
+            } else if (item.endX < item.startX) {
+                x = item.x - item.rate;
+                item.x = x < item.endX ? item.endX : x
+            }
+            if (item.endY > item.startY) {
+                y = item.y + item.rate;
+                item.y = y > item.endY ? item.endY : y
+            } else if (item.endY < item.startY) {
+                y = item.y - item.rate;
+                item.y = y < item.endY ? item.endY : y
+            }
         }
         return item
+    }
+
+    iniPos(obj, startInd, path) {
+        path = path || 'path';
+        var variable = 1;
+        var path = obj[path];
+        obj.endX = path[startInd + variable].x
+        obj.endY = path[startInd + variable].y
+        obj.x = obj.startX = path[startInd].x
+        obj.y = obj.startY = path[startInd].y
+        return obj;
     }
 
     redrawImg() {
@@ -66,7 +118,7 @@ class Animations {
                 let y = item.y;
                 this.ctx.drawImage(item.character, x, y, item.width, item.height);
                 let isEnd = item.x == item.endX && item.y == item.endY
-                if (isEnd) {
+                if (isEnd && !item.loop) {
                     arr[i] = true
                 }
             }
