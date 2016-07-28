@@ -7,21 +7,15 @@ class Graphics {
         this.endpos = config.path.end
         this.rate = config.rate || 10
         if (config.loop) {
-            //this.loop = config.loop
+            this.hasLoop = true
             let lastEle = config.path[config.path.length - 1]
             this.loopPath = config.path.slice(config.loop[0], config.loop[1] + 1)
             this.loopPath.unshift(lastEle)
-            this.loopNum=0
+            this.loopNum = 0
+        } else {
+            this.hasLoop = false
         }
-        try {
-            this.x = this.startX = this.startpos.x
-            this.y = this.startY = this.startpos.y
-            this.endX = this.endpos.x
-            this.endY = this.endpos.y
-        } catch (e) {
-            console.log(e.message)
-            this.path = config.path
-        }
+        this.path = config.path
         this.ctx = ctx
         this.character = this.generateImg(config.src, this.startpos, this.endpos)
     }
