@@ -4,7 +4,7 @@
     "style": "scss"
   },
   "generator-react-webpack": {
-    "appName": "courseware",
+    "appName": "flashConvert",
     "style": "sass",
     "postcss": true,
     "generatedWithVersion": 3
