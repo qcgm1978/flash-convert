@@ -99,6 +99,8 @@ class Animations {
                 this.setAnimateEndPos(item)
                 let x = item.x;
                 let y = item.y;
+                //this.ctx.setTransform(1,1,0,1,0,0);
+
                 this.ctx.drawImage(item.character, x, y, item.width, item.height);
                 let isEnd = item.x == item.endX && item.y == item.endY
                 if (isEnd && !item.hasLoop) {
